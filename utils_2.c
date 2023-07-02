@@ -31,16 +31,16 @@ int	ft_alphalen(char *input)
 int	ft_len_u_space(char *input)
 {
 	int	i;
-	int	rtrn;
+//	int	rtrn;
 
 	i = 0;
-	rtrn = 0;
+//	rtrn = 0;
 	while (input[i] == ' ')
 		i++;
 	while(input[i] && input[i] != ' ')
 	{
 		i++;
-		rtrn++;
+//		rtrn++;
 	}
 	return (i);
 }
@@ -57,8 +57,6 @@ int	ft_parser(char *input, struct ms *tdata)
 	int	p;
 	int	sp;
 	int indx;
-	int	ctrl;
-	ctrl = 0;
 	tdata->command = malloc(sizeof(char) * (ft_alphalen(input) - 1));
 	sp = ft_len_u_space(input) - 1;
 	indx = 0;
@@ -95,7 +93,6 @@ int	ft_parser(char *input, struct ms *tdata)
 			{
 				while (i < sp - 1)
 				{
-					if ()
 					if (!((input[i + 1] >= 'a' && input[i + 1] <= 'z') || (input[i + 1] == 34 || input[i + 1] == 39)))
 						return (0);
 					i++;
@@ -115,7 +112,7 @@ int	ft_parser(char *input, struct ms *tdata)
 	}
 	return (1);
 }
-
+/*
 int	main(void)
 {
 	struct ms tdata;
@@ -132,3 +129,4 @@ int	main(void)
 	}
 	return (0);
 }
+*/

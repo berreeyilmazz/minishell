@@ -14,6 +14,15 @@
 
 #define MINISHELL_H
 
+enum {
+	WORD,
+	PIPE,
+	R_OUT,
+	R_IN,
+	R_CREAT,
+	
+};
+
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdio.h>
@@ -29,7 +38,6 @@ struct ms
 	char	**str;
 };
 
-
 struct ms tdata;
 int	ft_alphalen(char *input);
 int	ft_len_u_space(char *input);
@@ -37,8 +45,19 @@ int	ft_print_cnf();
 int	ft_parser(char *input, struct ms *tdata);
 
 
+char    *ft_words(char *str, int i, int j);
+int ft_counter_word(char *str);
+void ft_total(char *str, int ctrl, struct ms *tdata);
+void	ft_double_str(char *str, struct ms *tdata);
 
-#endif
+
+
+
+#endif // echo " selam eren naber ? nasıl gidiyor ?v  " > a | cat a | tr i o
+ // 4  word " pipe word word pipe word word word
+ //1 5
+ // 
+//ls –al | sort >& out
 
 
 //çalışanlar  "l"s""

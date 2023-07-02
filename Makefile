@@ -1,4 +1,4 @@
-SRCS	= utils.c
+SRCS	= utils_1.c utils_2.c
 OBJ		= $(SRCS:.c=.o)
 NAME	= minishell
 CC		= gcc

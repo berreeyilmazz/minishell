@@ -6,7 +6,7 @@ void    handler(int signal)
     printf("ctrl+c sinyali (SIGINT) alındı.\n");
 }
 
-int main()
+/*int main()
 {
     int i = 0;
     signal(SIGINT, handler);
@@ -17,4 +17,10 @@ int main()
             return (0);
     }
     return (0);
+}*/
+
+
+int main(int ac, char **av, char **env) {
+	for (char **e = env; *e; e++)
+		printf("%s\n", *e);
 }

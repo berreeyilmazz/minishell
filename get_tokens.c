@@ -1,5 +1,5 @@
 #include "minishell.h"
-
+/*
 int	ft_counter_word(char *str)
 {
 	int	i;
@@ -28,7 +28,7 @@ int	ft_counter_word(char *str)
 			i++;
 		}
 	}
-	g_global.cnt = rtrn;
+	g_global.cnt = 8;
 	printf("cnt:  %d\n",g_global.cnt);
 	return (rtrn);
 }
@@ -88,7 +88,7 @@ int	ft_check_quotes_2(int i)
 	return (0);
 }
 
-
+*/
 void	ft_words(char *str, int i, int j, t_token **token)
 {
 	int		k;
@@ -106,12 +106,9 @@ void	ft_words(char *str, int i, int j, t_token **token)
 
 void    ft_get_next(t_token **tmp)
 {
-    if(g_global.cnt > 1)
-    {
-       (*tmp)->next = malloc(sizeof(t_token));
-       (*tmp) = (*tmp)->next;
-       g_global.cnt--;
-    }
+    (*tmp)->next = malloc(sizeof(t_token));
+    (*tmp) = (*tmp)->next;
+  
 }
 
 int    ft_get_pipe_red(t_token **token, int i)

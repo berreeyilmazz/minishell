@@ -32,7 +32,6 @@ void	ft_free()
 		free(token);
 		token = tmp;
 	}
-
 	free(g_global.input);
 	g_global.tokens = NULL;
 	g_global.input = NULL;
@@ -66,11 +65,12 @@ void	get_line()
 	int	i;
 
 	i = 0;
-	while (i < 2)
+	while (i < 15)
 	{
 		g_global.input = readline("Minishell> ");
 		ft_init();
-		ft_counter_word(g_global.input);
+		//ft_counter_word(g_global.input);
+		printf("AAAAAA\n");
 		ft_get_tokens(0, 0);
 		ft_get_type();
 		write_global();

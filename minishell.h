@@ -73,11 +73,14 @@ int 	red_pipe_or_quote(int i);
 void	ft_get_type();
 int		ft_categorize(t_token **token);
 void	ft_types(t_token **token);
-int	ft_check_quotes(int i);
-int	ft_check_quotes_2(int i);
-int	ft_check_quotes_0(int i);
-int	ft_check_quotes_4(int i);
-int	ft_check_quote_detailed(int	i);
+int		ft_check_quotes(int i);
+int		ft_check_quotes_2(int i);
+int		ft_check_quotes_0(int i);
+int		ft_check_quotes_4(int i);
+int		ft_check_quote_detailed(int	i);
+int 	ft_len(int start, int i);
+int		ft_get_word_for_quote(int start, int i, t_token **token);
+
 
 
 

@@ -23,6 +23,7 @@ executable_struct.o
 libft
 main.c
 main.o
+mert.c
 minishell
 minishell.h
 parser_categorize.c

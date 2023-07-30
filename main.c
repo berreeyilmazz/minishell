@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 14:26:05 by havyilma          #+#    #+#             */
-/*   Updated: 2023/07/28 08:49:52 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/07/30 03:21:10 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void yazdir_t_token(void)
 	while (iter)
 	{
 	//	printf("\n-Yeni Token-\n");
-		printf("Type = %u, Contents-> [%s]\n",iter->type, iter->content);
+		printf("type = %u, contents-> [%s]\n",iter->type, iter->content);
 		iter = iter->next;
 	}
 	fflush(stdout);
@@ -77,11 +77,11 @@ void	get_line(void)
 			ft_free();
 			continue;
 		}		
+		//yazdir_t_token();
 		ft_setting_t_executable(); // hata kontrol eklemesi.
-	//	yazdir_t_token();
 		//yazdir_t_executable();
 		ft_execute_starter();
-	//	system("leaks minishell");
+		system("leaks minishell");
 		//printf("fdsfasdfs\n");
 	}
 }

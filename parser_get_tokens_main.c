@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:57:28 by havyilma          #+#    #+#             */
-/*   Updated: 2023/07/26 00:59:51 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/07/30 05:02:28 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_get_tokens(int i, int start)
 		{
 			ft_words(start, i, &token);
 			token->next = NULL;
-			break ;
+			return(1);
 		}
 		if (i == -1)
 			break ;

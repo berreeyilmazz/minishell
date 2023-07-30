@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:03:30 by havyilma          #+#    #+#             */
-/*   Updated: 2023/07/27 01:11:42 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/07/30 01:39:30 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,18 @@ int	ft_get_type(void)
 
 void	ft_types(t_token **token)
 {
-	if (!ft_strcmp((*token)->content, "|"))
+	if (ft_strcmp((*token)->content, "|"))
 		(*token)->type = PIPE;
-	else if (!ft_strcmp((*token)->content, "<"))
+	else if (ft_strcmp((*token)->content, "<"))
 		(*token)->type = RED_I;
-	else if (!ft_strcmp((*token)->content, ">"))
+	else if (ft_strcmp((*token)->content, ">"))
 		(*token)->type = RED_O;
-	else if (!ft_strcmp((*token)->content, ">>"))
+	else if (ft_strcmp((*token)->content, ">>"))
 		(*token)->type = DB_O;
-	else if (!ft_strcmp((*token)->content, "<<"))
+	else if (ft_strcmp((*token)->content, "<<"))
 		(*token)->type = DB_I;
-	else if (!ft_strcmp((*token)->content, "$"))
-		(*token)->type = DOLLAR;
+	else if (ft_strcmp((*token)->content, "$"))
+		(*token)->type = COMMAND;
 	else
 		(*token)->type = COMMAND;
 }

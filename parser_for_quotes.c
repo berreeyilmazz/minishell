@@ -6,12 +6,33 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 06:19:57 by havyilma          #+#    #+#             */
-/*   Updated: 2023/07/28 03:38:10 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/07/30 04:53:51 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+/*
+int	for_quotes(int start, int i, t_token **token)
+{
+	int	keep_start;
+	int	keep_i;
+	char	*tmp;
 
+	keep_start = start;
+	keep_i = i;
+	while (start < i && g_global.input[start])
+	{
+		if (g_global.input[start] == '$')
+		{
+			free((*token)->content);
+			if_dollar(token, keep_start, start, i);
+			break;
+		}
+		start++;
+	}
+	ft_get_word_for_quote()
+}
+*/
 int	ft_len(int start, int i, char quote, int cnt)
 {
 	while (g_global.input[start])
@@ -60,9 +81,7 @@ int ft_i(int start)
 		else if (g_global.input[start] && (g_global.input[start] == 34 || g_global.input[start] == 39))
 		{
 			if (quote == '\0')
-			{
 				quote = g_global.input[start];
-			}
 			else if (quote != '\0')
 			{
 				if (g_global.input[start] == quote)
@@ -96,7 +115,8 @@ int ft_get_while(int start, int i, t_token **token, char quote)
 	j = 0;
 	while (g_global.input[start])
 	{
-		if (g_global.input[start] && g_global.input[start] != 34 && g_global.input[start] != 39 && start < i)
+		if (g_global.input[start] && g_global.input[start] != 34 
+		&& g_global.input[start] != 39 && start < i)
 			(*token)->content[j++] = g_global.input[start];
 		else if (g_global.input[start] && (g_global.input[start] == 34 || g_global.input[start] == 39) && start < i)
 		{

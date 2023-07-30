@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 22:06:38 by havyilma          #+#    #+#             */
-/*   Updated: 2023/07/28 08:25:46 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/07/30 05:01:34 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char *current_str(char **str, int index, char ctrl_n)
 	{
 	//	printf("index:%d tmp:%s\n", index, tmp);
 		new = ft_strjoin_vol2(tmp, str[index]);
+		free(tmp);
 		tmp = new;;
 		free(new);
 		index++;

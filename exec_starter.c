@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 19:31:27 by mkoroglu          #+#    #+#             */
-/*   Updated: 2023/07/28 08:42:54 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/02 09:25:25 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,11 @@ int	ft_execute_main(t_executable *exec)
 {
 	if (g_global.pipe_cnt > 0)
 		return (0); //Buna çalışan dosyada bakman lazım.
-	//dup2 işlemini 3 fonksiyonun içine ayrı ayrı alabilriiz.
-	dup2(exec->fd_input, 0);
-	dup2(exec->fd_output, 1);
 	if (!ft_strncmp(exec->str[0], "cd", 2))//buralarda elle sayı falan da girdik bok gibi oldu
 		ft_cd(exec);
 	else if (!ft_strncmp(exec->str[0], "exit", 4))
 		ft_exit(exec);
-	/*else if (!ft_strncmp(exec->str[0], "export", 6) && !exec->str[1]); //tek karakterse veriyor.
+	/*else if (!ft_strncmp(exec->str[0], "export", 6) && exec->str[1]); //tek karakterse veriyor.
 	else if (!ft_strncmp(exec->str[0], "unset", 5));
 	else
 		return (0);*/
@@ -55,10 +52,12 @@ int	ft_execute_chield(t_executable *exec)
 	else if (!ft_strncmp(exec->str[0], "pwd", 3))
 		ft_pwd();
 	//else if (!ft_strncmp(exec->str[0], "export", 6));
-	//else if (!ft_strncmp(exec->str[0], "env", 3));
+	else if (!ft_strncmp(exec->str[0], "env", 3))
+		ft_env();
 	else
 		ft_execve(exec);
-	return(0);
+	exit(1);
+//	return(0);
 }
 
 int	ft_execute_starter(void)
@@ -76,10 +75,7 @@ int	ft_execute_starter(void)
 		}
 		exec->pid = fork();
 		if (exec->pid == 0)
-		{
 			ft_execute_chield(exec);  
-			exit(1);
-		}
 		if (exec->pid == -1)
 			return (0); //hata fork
 		exec = exec->next;

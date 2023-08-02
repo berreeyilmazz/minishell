@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:57:37 by havyilma          #+#    #+#             */
-/*   Updated: 2023/07/28 04:00:21 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/02 09:23:58 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,11 @@ void 				ft_echo(t_executable *exec);
 void				ft_pwd();
 void				ft_cd(t_executable *exec);
 int					ft_syntax_error(void);
+int					if_dollar_counter(int i, int end, int len);
+int 				turning_into_env(int   *m, t_token **token, int *index);
+int					if_dollar_handler(t_token **token, int i, int end, int k);
+void    ft_env();
+
 
 
 #endif

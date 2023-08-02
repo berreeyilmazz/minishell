@@ -1,9 +1,9 @@
 SRCS	= 	parser_categorize.c	parser_utils.c	parser_get_tokens_2.c \
 				parser_get_tokens_main.c parser_init_and_free.c \
 				parser_for_quotes.c main.c \
-				builtin_detect.c builtin_echo.c	builtin_exit.c builtin_pwd_cd.c \
+				builtin_echo.c	builtin_exit.c builtin_pwd_cd.c \
 utils.c utils_str.c exec_execve.c exec_starter.c executable_redirection.c \
-executable_struct.c
+executable_struct.c parser_for_dollar.c builtin_env.c
 
 OBJ		= $(SRCS:.c=.o)
 NAME	= minishell

@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 14:26:05 by havyilma          #+#    #+#             */
-/*   Updated: 2023/07/30 03:21:10 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/02 10:07:36 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	get_env(char **envp)
 	i = 0;
 	while(envp[cnt])
 		cnt++;
-	g_global.env = malloc(sizeof(char *) * cnt + 1);
+	g_global.env = malloc(sizeof(char *) * (cnt + 1));
 	while (i < cnt)
 	{
 		g_global.env[i] = ft_strdup(envp[i]);
@@ -60,13 +60,8 @@ void	get_line(void)
 	while (1)
 	{
 		ft_init();
-		g_global.input = readline("Minishell> ");
-		add_history(g_global.input);
-		if(g_global.input[0] == '\n')
-		{
-			free(g_global.input);
-			continue;
-		}
+		g_global.input = readline("Minishell-$ ");
+		add_history(g_global.input);	
 		if (ft_get_tokens(-1, 0) == -1)
 		{
 			ft_free();
@@ -76,11 +71,13 @@ void	get_line(void)
 		{
 			ft_free();
 			continue;
-		}		
-		//yazdir_t_token();
+		}	
+
+	//	yazdir_t_token();
 		ft_setting_t_executable(); // hata kontrol eklemesi.
 		//yazdir_t_executable();
 		ft_execute_starter();
+		ft_free();
 		system("leaks minishell");
 		//printf("fdsfasdfs\n");
 	}

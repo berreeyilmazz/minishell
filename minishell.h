@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:57:37 by havyilma          #+#    #+#             */
-/*   Updated: 2023/08/04 13:21:20 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:50:32 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int    ft_export_plus(t_executable *exec);
 int    re_fill_exp(char *str);
 int re_fill_env(char *str);
 int	ft_strcmp_for_re(char *s1, char *s2);
+void    ft_unset(t_executable *exec);
 
 
 
@@ -152,9 +153,21 @@ Minishell-$ echo mert melih > out echo amk > outfile
 
 
 
+bash-3.2$ a << here
+> abc
+>   here
+> here   
+> hhh
+> lll
+> here
+bash: a: command not found
+(en baştaki dosya var mı kontrol ediyor muyuz??)
+
+
 BERRE;
 
 cat << | "hatada newline yazıyor her şeye" önemsiz olabilir.
 Minishell-$ echo mert melih > out echo amk > outfile
+
 	export istanbuldepremi=strcmp_faciasi
 */

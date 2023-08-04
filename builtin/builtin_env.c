@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 09:06:34 by havyilma          #+#    #+#             */
-/*   Updated: 2023/08/04 12:26:34 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/04 14:27:06 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,10 +171,8 @@ char    is_there_equal_sign(char *str)
     return(flag);
 }
 
-
 int    ft_export_plus(t_executable *exec)
 {
-    int         k;
     int         i;
 
     i = 1;
@@ -186,7 +184,6 @@ int    ft_export_plus(t_executable *exec)
             i++;
             continue;
         }
-        k = 0;
         re_fill_exp(exec->str[i]);
         if(is_there_equal_sign(exec->str[i]) == '=')
             re_fill_env(exec->str[i]);

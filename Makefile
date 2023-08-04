@@ -5,7 +5,7 @@ SRCS	= 	./parser/parser_categorize.c ./parser/parser_utils.c \
 			./exec/exec_execve.c ./exec/exec_starter.c \
 			./executable/executable_redirection.c ./executable/executable_struct.c \
 			./builtin/builtin_echo.c ./builtin/builtin_exit.c \
-			./builtin/builtin_pwd_cd.c ./builtin/builtin_env.c \
+			./builtin/builtin_pwd_cd.c ./builtin/builtin_env.c ./builtin/builtin_unset.c \
 			./utils/utils.c ./utils/utils_str.c \
 			main.c yazdirmafonksiyonları.c 
 

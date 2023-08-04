@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 19:31:27 by mkoroglu          #+#    #+#             */
-/*   Updated: 2023/08/04 13:03:14 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:45:21 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int	ft_execute_main(t_executable *exec)
 		ft_exit(exec);
 	else if (!ft_strcmp(exec->str[0], "export") && exec->str[1])
 		ft_export_plus(exec);     
-//	else if (!ft_strcmp(exec->str[0], "unset"));
+	else if (!ft_strcmp(exec->str[0], "unset"))
+		ft_unset(exec);
 	else
 		return (0);
 	return (1);

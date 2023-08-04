@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:57:37 by havyilma          #+#    #+#             */
-/*   Updated: 2023/08/02 09:23:58 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/04 13:21:20 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define MINISHELL_H
 
-# include "./libft/libft.h"
+# include "./libft/libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
@@ -52,15 +52,30 @@ typedef struct s_executable
 	struct s_executable	*next;
 }				t_executable;
 
+typedef struct s_export
+{
+	char			*line;
+	struct s_export	*next;
+}				t_export;
+
+typedef struct s_env
+{
+	char			*line;
+	struct s_env	*next;	
+}				t_env;
+
 struct				s_global
 {
 	int				pipe_cnt;
-	char			**env;
+	char			**envp;
 	int				*exit_status;
 	char			*input;
 	struct s_token	*tokens;
 	t_executable	*exec;
+	t_export		*exp;
+	t_env			*env;
 }					g_global;
+
 
 //Mert
 
@@ -71,7 +86,11 @@ int		ft_filename_redirection_executable(void);
 int		ft_execute_starter(void);
 int		ft_setting_t_executable(void);
 void	ft_zero_struct_executable(t_executable	*exec);
+void	ft_free_global(void);
+int		ft_heredoc(char *str_endline, int fd_input);
 
+void yazdir_t_executable(void);
+void yazdir_t_token(void);
 //berre
 
 void				ft_words(int i, int j, t_token **token);
@@ -103,47 +122,39 @@ int					if_dollar_counter(int i, int end, int len);
 int 				turning_into_env(int   *m, t_token **token, int *index);
 int					if_dollar_handler(t_token **token, int i, int end, int k);
 void    ft_env();
+char	*get_from_env(char *word);
+void    ft_export();
+int    ft_export_plus(t_executable *exec);
+void    fill_env_exp();
+void    ft_env();
+void    ft_export();
+void    add_back_env(char *str);
+void    add_back_exp(char *str, char flag);
+char    *put_quotes(char *str);
+void    take_line(t_export **tmp, int i);
+char    is_there_equal_sign(char *str);
+int    ft_export_plus(t_executable *exec);
+int    re_fill_exp(char *str);
+int re_fill_env(char *str);
+int	ft_strcmp_for_re(char *s1, char *s2);
 
 
 
 #endif
 
 /*
-
-bash-3.2$ echo berre'
-> 
-bash-3.2$ "ech'o" berre
-bash: ech'o: command not found
-bash-3.2$ echo "berre
-> "
-berre
-
-bash-3.2$ echo "mer
-> t koroglu"
-mer
-t koroglu
-
-*/
-
-
-
-/*
 MERT yapılacak
--Yapılacaklar listesi
-
-MERT soru
-"ls |" ne yapmalıyız?
+-Heredoc
+-Sinyal
+-Return değerleri hatalar falan için
+-Eski notları incelemek
+Minishell-$ echo mert melih > out echo amk > outfile
 
 
 
 BERRE;
 
-*echo \"berre\"  ----zorunlu değilmiş
-*ENTER | newline
-*echo
-*exit
-
-*cd
-*export
-*unset
+cat << | "hatada newline yazıyor her şeye" önemsiz olabilir.
+Minishell-$ echo mert melih > out echo amk > outfile
+	export istanbuldepremi=strcmp_faciasi
 */

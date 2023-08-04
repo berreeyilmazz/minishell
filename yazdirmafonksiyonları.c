@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   yazdirmafonksiyonları.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkoroglu <mkoroglu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 00:33:22 by mkoroglu          #+#    #+#             */
-/*   Updated: 2023/07/27 00:38:45 by mkoroglu         ###   ########.fr       */
+/*   Updated: 2023/08/04 13:10:07 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void yazdir_t_executable(void)
 	while (iter)
 	{
 		printf("\n-Yeni exec-\n");
-		printf("fd_input = %d, fd_output = %d, pid = %d, STR->\n", iter->fd_input, iter->fd_output, iter->pid);
+		printf("fd_input = %d, fd_output = %d, pid = %d\n", iter->fd_input, iter->fd_output, iter->pid);
 		i = 0;
 		while (iter->str[i])
 		{
-			printf("%s", iter->str[i]);
+			printf("STR->%s\n", iter->str[i]);
 			i++;
 		}
 		iter = iter->next;

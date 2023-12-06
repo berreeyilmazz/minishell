@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:56:44 by mkoroglu          #+#    #+#             */
-/*   Updated: 2023/08/04 13:06:06 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/24 18:08:06 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ int	ft_pipe_cont_executable(void)
 	{
 		fd = 0;
 		fd = malloc(sizeof(int) * 2);
-		if (pipe(fd) == -1) // hata döndürmesi
-			return (-1);
+		if (fd == NULL)
+			return (0);
+		if (pipe(fd) == -1)
+			return (0);
 		exec->fd_output = fd[1];
 		exec->next->fd_input = fd[0];
 		exec = exec->next;
@@ -43,7 +45,7 @@ t_token	*ft_exec_strdup(t_executable *exec, t_token *tokens, int size)
 	i = 0;
 	exec->str = malloc(sizeof(char *) * (size + 1));
 	if (!exec->str)
-		return (0);//bu returnu kullanmadım hiç hata durumu
+		return (0);
 	exec->str[size] = NULL;
 	while (tokens)
 	{
@@ -59,7 +61,7 @@ t_token	*ft_exec_strdup(t_executable *exec, t_token *tokens, int size)
 	return (tokens);
 }
 
-int	ft_add_str_executable(void)
+void	ft_add_str_executable(void)
 {
 	t_executable	*exec;
 	t_token			*tokens;
@@ -84,7 +86,6 @@ int	ft_add_str_executable(void)
 		exec = exec->next;
 		a++;
 	}
-	return (1);
 }
 
 int	ft_open_struct_executable(void)
@@ -112,15 +113,11 @@ int	ft_open_struct_executable(void)
 	return (1);
 }
 
-int	ft_setting_t_executable(void)
+void	ft_setting_t_executable(void)
 {
-	
-	if (!ft_open_struct_executable())
-		return (0); //hata malloc
-	if (!ft_add_str_executable())
-		return (0); //hata malloc
+	ft_open_struct_executable();
+	ft_add_str_executable();
 	if (g_global.pipe_cnt > 0)
-		ft_pipe_cont_executable();//hata alma ifle işlenmedi
-	ft_filename_redirection_executable(); //bunun retrun hata eklemedik
-	return (1);
+		ft_pipe_cont_executable();
+	ft_filename_redirection_executable();
 }

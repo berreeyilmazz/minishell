@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 17:59:08 by mkoroglu          #+#    #+#             */
-/*   Updated: 2023/08/04 13:05:01 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/25 14:14:52 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,22 @@
 int	ft_db_i(t_executable *exec, t_token *tokens)
 {
 	pid_t	pid;
-	int		*fd;
+	int		fd[2];
 
-	fd = malloc(sizeof(int *) * 2);
+	if (!tokens->next)
+		return (ft_syntax_error());
 	if (pipe(fd) == -1)
-		return (-1);// hata döndürmesi
+		return (-1);
 	if (exec->fd_input > 2)
 		close(exec->fd_input);
 	exec->fd_input = fd[0];
 	pid = fork();
-	if (pid == 0)
+	if (pid)
+		g_global.heredoc_pid = pid;
+	else if (tokens->next)
 		ft_heredoc(tokens->next->content, fd[1]);
-	waitpid(pid, g_global.exit_status, 0);
+	waitpid(pid, &g_global.exit_status, 0);
 	close(fd[1]);
-	if (fd)
-		free(fd);
 	return (1);
 }
 
@@ -38,11 +39,14 @@ int	ft_db_o(t_executable *exec, t_token *tokens)
 	int	fd;
 
 	tokens = tokens->next;
-	if (tokens->type == FILENAME)
+	if (tokens && tokens->type == FILENAME)
 	{
-		fd = open(tokens->content, O_CREAT | O_RDWR | O_APPEND , 0777);
+		fd = open(tokens->content, O_CREAT | O_RDWR | O_APPEND, 0777);
 		if (fd == -1)
-			return (0); ///hata mesajı!!!!????
+		{
+			ft_error_no_file(tokens->content);
+			return (0);
+		}
 		if (exec->fd_output > 2)
 			close(exec->fd_output);
 		exec->fd_output = fd;
@@ -55,12 +59,19 @@ int	ft_red_i(t_executable *exec, t_token *tokens)
 	int	fd;
 
 	tokens = tokens->next;
-	if (tokens->type == FILENAME)
+	if (tokens && tokens->type == FILENAME)
 	{
+		if (access(tokens->content, R_OK))
+		{
+			ft_error_no_file(tokens->content);
+			return (0);
+		}
 		fd = open(tokens->content, O_CREAT | O_RDONLY, 0777);
 		if (fd == -1)
+		{
+			ft_error_no_file(tokens->content);
 			return (0);
-		//hata mesajı!!!!????
+		}
 		if (exec->fd_input > 2)
 			close(exec->fd_input);
 		exec->fd_input = fd;
@@ -73,11 +84,14 @@ int	ft_red_o(t_executable *exec, t_token *tokens)
 	int	fd;
 
 	tokens = tokens->next;
-	if (tokens->type == FILENAME)
+	if (tokens && tokens->type == FILENAME)
 	{
 		fd = open(tokens->content, O_CREAT | O_RDWR | O_TRUNC, 0777);
 		if (fd == -1)
-			return (0); ///hata mesajı!!!!????
+		{
+			ft_error_no_file(tokens->content);
+			return (0);
+		}
 		if (exec->fd_output > 2)
 			close(exec->fd_output);
 		exec->fd_output = fd;
@@ -92,7 +106,7 @@ int	ft_filename_redirection_executable(void)
 
 	exec = g_global.exec;
 	tokens = g_global.tokens;
-	while (tokens)
+	while (tokens && g_global.signal_status != -1)
 	{
 		if (tokens->type == PIPE)
 			exec = exec->next;

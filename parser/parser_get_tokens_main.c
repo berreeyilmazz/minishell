@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:57:28 by havyilma          #+#    #+#             */
-/*   Updated: 2023/08/04 13:14:21 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/22 20:30:54 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	while_for_spaces(int i)
 
 int	while_for_nonspaces(int i)
 {
-	while ((g_global.input[i] && red_pipe_or_quote(i) == 0))
+	while (g_global.input[i] && red_pipe_or_quote(i) == 0)
 		i++;
 	return (i);
 }
@@ -37,19 +37,18 @@ int	ft_get_tokens(int i, int start)
 		i = while_for_nonspaces(start);
 		if (g_global.input[i] && red_pipe_or_quote(i) == 1)
 			i = ft_get_tokens_plus(start, i, &token);
-		else if (g_global.input[i] && (g_global.input[i] == 34
+		else if (g_global.input[i] && (g_global.input[i] == 34 
 				|| g_global.input[i] == 39))
 			i = ft_get_word_for_quote(start, i, &token);
 		else if (g_global.input[i] == 32 && start != i)
 			i = ft_get_word(start, i, &token);
 		else if (!g_global.input[i])
 		{
-			ft_words(start, i, &token);
-			token->next = NULL;
-			return(1);
+			i = ft_get_word(start, i, &token);
+			break ;
 		}
 		if (i == -1)
 			break ;
 	}
-	return (i);
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkoroglu <mkoroglu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 06:11:11 by havyilma          #+#    #+#             */
-/*   Updated: 2023/08/02 18:29:14 by mkoroglu         ###   ########.fr       */
+/*   Updated: 2023/08/25 02:48:59 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,35 @@
 
 int	ft_print_cnf(void)
 {
-	printf("unexpected token\n");
+	printf("minishell: command not found\n");
+	g_global.exit_status = 127;
+	return (-1);
+}
+
+int	unexpected_token(void)
+{
+	printf("minishell: unexpected token\n");
 	return (-1);
 }
 
 int	ft_syntax_error(void)
 {
-	printf("syntax error near unexpected token `newline'\n");
+	printf("minishell: syntax error near unexpected token ''\n");
+	g_global.exit_status = 258;
 	return (-1);
 }
 
 int	red_pipe_or_quote(int i)
 {
-	if (g_global.input[i] == '|' || g_global.input[i] == '>'
+	if (g_global.input[i] == '|' || g_global.input[i] == '>' 
 		|| g_global.input[i] == '<')
 		return (1);
 	else if (g_global.input[i] == 34)
 		return (34);
 	else if (g_global.input[i] == 39)
 		return (39);
-	else if (g_global.input[i] == ' ')
+	else if (g_global.input[i] == ' ' || g_global.input[i] == 13)
 		return (32);
-	return (0);
-}
-
-int	ft_check_if_next(int i, t_token **token)
-{
-	while (g_global.input[i])
-	{
-		i++;
-		if (g_global.input[i] && g_global.input[i] != 32)
-			return (1);
-	}
-	(*token)->next = NULL;
 	return (0);
 }
 
@@ -54,4 +50,6 @@ void	ft_get_next(t_token **tmp)
 {
 	(*tmp)->next = malloc(sizeof(t_token));
 	(*tmp) = (*tmp)->next;
+	(*tmp)->content = NULL;
+	(*tmp)->type = 0;
 }

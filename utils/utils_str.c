@@ -6,12 +6,12 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:28:40 by mkoroglu          #+#    #+#             */
-/*   Updated: 2023/08/03 23:34:42 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/25 14:17:45 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-//silinebilir. get from env de problem yaşamadıysak
+
 char	*ft_find_in_env(char *str)
 {
 	char	*line;
@@ -42,6 +42,13 @@ void	ft_free_double_pointer(char **str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return ;
+	else if (!*str)
+	{
+		free (str);
+		return ;
+	}
 	while (str[i])
 	{
 		if (str[i])
@@ -60,7 +67,7 @@ char	*ft_strjoin_vol2(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	thegoodplace = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	thegoodplace = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
 	if (thegoodplace == 0)
 		return (0);
 	i = 0;
@@ -71,5 +78,33 @@ char	*ft_strjoin_vol2(char const *s1, char const *s2)
 	k = 0;
 	while (s2[k])
 		thegoodplace[i++] = s2[k++];
+	thegoodplace[i] = '\0';
 	return (thegoodplace);
+}
+
+int	ft_check_if_next(int i, t_token **token)
+{
+	int	ctrl;
+
+	ctrl = 0;
+	while (g_global.input[i])
+	{
+		if (g_global.input[i] && g_global.input[i] != 32)
+		{
+			ctrl = 1;
+			break ;
+		}
+		i++;
+	}
+	if ((*token)->content == NULL && ctrl == 0)
+	{
+		(*token)->next = NULL;
+		return (0);
+	}
+	if (ctrl == 1 && (*token)->content == NULL)
+		return (0);
+	if (ctrl == 1 && (*token)->content != NULL)
+		return (1);
+	(*token)->next = NULL;
+	return (0);
 }

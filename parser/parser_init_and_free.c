@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 06:11:33 by havyilma          #+#    #+#             */
-/*   Updated: 2023/08/03 01:29:37 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/25 03:23:46 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ void	ft_init(void)
 	g_global.tokens = malloc(sizeof(t_token));
 	g_global.pipe_cnt = 0;
 	g_global.input = 0;
+	g_global.signal_status = 0;
+	g_global.heredoc_pid = -1;
+	g_global.stdout_control = dup(1);
 	g_global.tokens->next = 0;
 	g_global.tokens->content = 0;
+	g_global.tokens->type = 0;
 }
 
 void	ft_free(void)
@@ -36,7 +40,8 @@ void	ft_free(void)
 		token = tmp;
 	}
 	g_global.tokens = 0;
-	free(g_global.input);
+	if (g_global.input)
+		free(g_global.input);
 }
 
 void	ft_free_global(void)
@@ -44,6 +49,7 @@ void	ft_free_global(void)
 	t_executable	*exec;
 	t_executable	*tmp;
 
+	ft_close_fd();
 	exec = g_global.exec;
 	while (exec)
 	{
@@ -52,30 +58,38 @@ void	ft_free_global(void)
 		free(exec);
 		exec = tmp;
 	}
-	if (g_global.exit_status)
-		free(g_global.exit_status);
 	g_global.exec = 0;
 	ft_free();
 }
 
-void	write_global(void)
+int	is_it_quote(int i)
 {
-	t_token	*tmp;
+	if (g_global.input[i] == 34 || g_global.input[i] == 39)
+		return (1);
+	else if (g_global.input[i] != 34 && g_global.input[i] != 39)
+		return (2);
+	return (0);
+}
 
-	tmp = g_global.tokens;
-	while (tmp)
+char	*get_from_env(char *word)
+{
+	int		i;
+	char	*rtrn;
+	t_env	*env;
+
+	env = g_global.env;
+	while (env)
 	{
-		if (tmp->next == NULL)
+		i = 0;
+		while (env->line[i] == word[i])
+			i++;
+		if (env->line[i] == '=' && !word[i])
 		{
-			printf("=> content[%s]    ------  [%d]\n", tmp->content, tmp->type);
-			break ;
-			return ;
+			rtrn = ft_substr(env->line, 
+					ft_strlen(word) + 1, ft_strlen(env->line));
+			return (rtrn);
 		}
-		else
-		{
-			printf("-> content[%s]   ++++++  type[%d] \n", tmp->content,
-				tmp->type);
-			tmp = tmp->next;
-		}
+		env = env->next;
 	}
+	return (NULL);
 }

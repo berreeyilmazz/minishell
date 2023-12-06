@@ -6,7 +6,7 @@
 /*   By: havyilma <havyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:28:17 by mkoroglu          #+#    #+#             */
-/*   Updated: 2023/08/04 13:12:48 by havyilma         ###   ########.fr       */
+/*   Updated: 2023/08/24 18:06:19 by havyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,35 @@ static char	*ft_access_cont(char *all_paths, char *func)
 		i++;
 	}
 	ft_free_double_pointer(path_options);
-	write(2, "command not found\n", 18);
-	return (0);
+	dup2(g_global.stdout_control, 1);
+	printf("minishell: %s: command not found\n", func);
+	if (all_paths)
+		free(all_paths);
+	exit (127);
 }
 
-//hata mesajı nasıl olmalı?
 int	ft_execve(t_executable *exec)
 {
 	char	*path;
 
-	if (!access(exec->str[0], 0))
+	if (!exec->str || !exec->str[0])
+		return (0);
+	if (ft_strchr(exec->str[0], '/') && access(exec->str[0], 0))
+	{
+		dup2(g_global.stdout_control, 1);
+		printf("minishell: %s: No such file or directory\n", exec->str[0]);
+		exit (127);
+	}
+	if (!access(exec->str[0], 0) && ft_strchr(exec->str[0], '/'))
 		path = ft_strdup(exec->str[0]);
 	else
-		path = ft_access_cont(get_from_env("PATH"), exec->str[0]); //PATH ksımını sonunda nulla at
+		path = ft_access_cont(get_from_env("PATH"), exec->str[0]);
 	if (!path)
+	{
+		dup2(g_global.stdout_control, 1);
+		printf("minishell: %s: No such file or directory\n", exec->str[0]);
 		exit(127);
-	execve(path, exec->str, g_global.envp); //burada exit atmasam nıolur? -1 hatası kaldı
-	if (path)
-		free(path);
+	}
+	execve(path, exec->str, g_global.envp);
 	return (1);
 }
